@@ -1,4 +1,16 @@
 {
     "use_algorithm": "Preprocessing",
-    "data": "/Users/beatrizfernandes/PIC2/data/preprop_test"
+    "data": "/Users/beatrizfernandes/PIC2/data/preprop_test",
+    "preprocessing_steps": {
+        "duplicate": true,
+        "normalize": true,
+        "filtering": true,
+        "prepare_analysis": true
+    },
+    "dataset_2d_segmentation": {
+        "input": "/Users/beatrizfernandes/PIC2/data/preprop_test/layer 2/nuclei 2d/",
+        "output": "/Users/beatrizfernandes/PIC2/data/preprop_test/layer 3/2d instance masks/",
+        "rois": "/Users/beatrizfernandes/PIC2/data/preprocessing_auto/rois_nuclei2d/"
+    },
+    "statistics": false
 }

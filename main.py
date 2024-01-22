@@ -16,8 +16,6 @@ def start_learning(configs):
     logging.info("Start learning")
     logging.info(configs["use_algorithm"])
 
-    print("HEY!!")
-
     pipeline = GetPipeLine(configs)
 
     pipeline.run()
@@ -46,7 +44,8 @@ if __name__ == "__main__":
     Sanity checks in order to ensure all settings in config
     have been set so the programm is able to run
     '''
-    assert configs["use_algorithm"] in ['Preprocessing']
+    assert configs["use_algorithm"] in ['Preprocessing',
+                                        'Evaluation_2D_Seg']
 
     # if "batchsize" in configs:
     #     if not isinstance(configs["batchsize"], int):

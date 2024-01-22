@@ -11,9 +11,19 @@ class Preprocessing(object):
 
     def __init__(self,
                  use_algorithm,
-                 data) -> None:
+                 data,
+                 preprocessing_steps = dict(),
+                 dataset_2d_segmentation = None,
+                 dataset_3d_segmentation = None,
+                 statistics = False) -> None:
         
         self.path_data = data
+        self.preprocessing_steps = preprocessing_steps
+
+        self.dataset_2d_segmentation = dataset_2d_segmentation
+        self.dataset_3d_segmentation = dataset_3d_segmentation
+        self.statistics = statistics
+
         self.path_split = self.path_data + "/layer 0/split channels dapi-gfap/"
         self.path_normalized = self.path_data + "/layer 1/normalized/"
         self.path_mean = self.path_data + "/layer 1/filter mean/"
@@ -44,10 +54,17 @@ class Preprocessing(object):
 
         self.path_macros = "/Users/beatrizfernandes/Documents/GitHub/PIC/macros"
 
-        try: ij
-        except NameError: ij = imagej.init('sc.fiji:fiji:2.14.0')
+        scyjava.config.add_option('-Xmx6g')
 
-        self.ij = ij
+        # ij = imagej.init('sc.fiji:fiji:2.14.0', add_legacy=False)
+        # self.ij = imagej.init('sc.fiji:fiji:2.14.0', headless = False)
+        self.ij = imagej.init('sc.fiji:fiji', mode='interactive')
+
+
+        # try: ij
+        # except NameError: ij = imagej.init('sc.fiji:fiji:2.14.0')
+
+        # self.ij = ij
 
     def dump_info(self, image) -> dict:
         """
@@ -82,14 +99,14 @@ class Preprocessing(object):
         logging.info("Start duplicating dataset\n")
         self.prep_macros()
 
-        dataset_list = os.listdir(self.path_originals)
+        dataset_list = os.listdir(self.path_data)
         image_ids = ["%03d" % i for i in range(1, len(dataset_list)+1)]
 
         macro_duplicate_split = open(file = self.path_macros + "/duplicate_split.ijm", mode='r').read()
 
-        for im, image_name in enumerate(list(filter(lambda element: '.tif' in element, os.listdir(self.path_originals)))):
+        for im, image_name in enumerate(list(filter(lambda element: '.tif' in element, os.listdir(self.path_data)))):
             if image_name.split('.')[-1]=="tif":
-                image_path = self.path_originals + image_name
+                image_path = self.path_data + image_name
                 image_id = image_ids[im]
 
                 print(image_path)
@@ -150,7 +167,8 @@ class Preprocessing(object):
             print(self.path_split + image_name)
             self.ij.window().clear()
 
-    def preparing_analysis(self):
+    def preparing_analysis(self,
+                           path_input):
         """
         Creates the four datasets for image subsequent processing.
             * nuclei 2d: path_nuclei2d; maximum intensity projection of the DAPI channel for segmentation tasks.
@@ -161,20 +179,19 @@ class Preprocessing(object):
         self.prep_macros()
 
         macro_datasets = open(file = self.path_macros + "/datasets.ijm", mode='r').read()
-        layer2_source = self.path_mean
 
         image_ids = []
-        for i in os.listdir(layer2_source): image_ids.append(i.split("_")[1])
+        for i in os.listdir(path_input): image_ids.append(i.split("_")[1])
         image_ids = list(set(image_ids))
 
         for image_id in image_ids:
-            files = list(filter(lambda element: image_id in element, os.listdir(layer2_source)))
+            files = list(filter(lambda element: image_id in element, os.listdir(path_input)))
             print(files)
             name_dapi = list(filter(lambda element: 'dapi' in element, files))[0].split('.')[0]
             name_gfap = list(filter(lambda element: 'gfap' in element, files))[0].split('.')[0]
 
             args ={
-                'images_path': layer2_source,
+                'images_path': path_input,
                 'image_id': 'image_' + image_id,
                 'name_dapi': name_dapi,
                 'name_gfap': name_gfap,
@@ -324,7 +341,7 @@ class Preprocessing(object):
             path_output: the path to output the dataset. If doesn't exist, is created.      
         """
 
-        self.group_rois_3d()
+        self.group_rois3d(path_roi3d=path_roi3d)
 
         if not os.path.exists(path_output):
             os.makedirs(path_output)
@@ -371,3 +388,49 @@ class Preprocessing(object):
                         }
                     self.ij.py.run_macro(macro_make_mask, args)
                 self.ij.py.run_macro("""run("Close All")""")
+
+    def run(self):
+        """
+        Runs the preprocessing pipeline
+        """
+        if "duplicate" in self.preprocessing_steps:
+            if self.preprocessing_steps["duplicate"] == True:
+                logging.info("Starting dataset duplication.")
+                self.duplicate_dataset()
+
+        if "normalizing" in self.preprocessing_steps:
+            if self.preprocessing_steps["normalizing"] == True:
+                logging.info("Starting dataset normalization.")
+                self.normalize_dataset()
+
+        if "filtering" in self.preprocessing_steps:
+            if self.preprocessing_steps["filtering"] == True:
+                logging.info("Starting dataset filtration.")
+                self.normalize_dataset()
+
+        if "prepare_analysis" in self.preprocessing_steps:
+            if self.preprocessing_steps["prepare_analysis"] == "mean" or self.preprocessing_steps["prepare_analysis"] == True:
+                logging.info("Starting to prepare the secondary datasets for analysis.\nDataset:{}".format(self.path_mean))
+                self.preparing_analysis(self.path_mean)
+            if self.preprocessing_steps["prepare_analysis"] == "gaussian":
+                logging.info("Starting to prepare the secondary datasets for analysis.\nDataset:{}".format(self.path_gaussian))
+                self.preparing_analysis(self.path_gaussian)
+        
+        if self.dataset_2d_segmentation is not None:
+            logging.info("Starting to prepare the dataset for the 2D instance segmentation analysis.")
+            self.iseg_2d_structure(path_input=self.dataset_2d_segmentation["input"],
+                                   path_output=self.dataset_2d_segmentation["output"],
+                                   path_roi2d=self.dataset_2d_segmentation["rois"])
+        
+        if self.dataset_3d_segmentation is not None:
+            logging.info("Starting to prepare the dataset for the 3D instance segmentation analysis.")
+            self.iseg_3d_structure(path_input=self.dataset_3d_segmentation["input"],
+                                   path_output=self.dataset_3d_segmentation["output"],
+                                   path_roi3d=self.dataset_3d_segmentation["rois"])
+        
+        if self.statistics is not False:
+            logging.info("Retrieving and saving statistics.")
+            self.get_statistics(self.statistics)
+        
+        logging.info("Finished preprocessing!")
+
