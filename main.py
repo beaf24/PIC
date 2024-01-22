@@ -6,7 +6,7 @@ Written by Beatriz Fernandes
 
 import os
 import argparse
-from utils import load_json
+from AstroNeuDL.utils import load_json
 # from instantdl.data_generator.metrics4losses import *
 from AstroNeuDL import GetPipeLine
 import logging
@@ -15,6 +15,8 @@ from keras import backend as K
 def start_learning(configs):
     logging.info("Start learning")
     logging.info(configs["use_algorithm"])
+
+    print("HEY!!")
 
     pipeline = GetPipeLine(configs)
 

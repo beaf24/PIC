@@ -1,7 +1,6 @@
 from AstroNeuDL.utils import *
 # from astroneudl.segmentation.InstanceSegmentation import InstanceSegmentation
-from preprocessing.preprocessing import Preprocessing
-
+from AstroNeuDL.preprocessing.preprocessing import Preprocessing
 
 def GetPipeLine(configs):
     if "seeds" in configs:

@@ -9,7 +9,7 @@ import json
 # from instantdl.segmentation.UNet_models import UNetBuilder
 from keras.callbacks import ModelCheckpoint, TensorBoard, EarlyStopping
 import time
-import tensorflow.compat.v1 as tf
+import tensorflow as tf
 tf.get_logger().setLevel('WARNING')
 from keras import backend as K
 from keras.applications.resnet50 import ResNet50
