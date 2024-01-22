@@ -1,6 +1,6 @@
-from utils import *
+from AstroNeuDL.utils import *
 # from astroneudl.segmentation.InstanceSegmentation import InstanceSegmentation
-from prepocessing.preprocessing import Preprocessing
+from preprocessing.preprocessing import Preprocessing
 
 
 def GetPipeLine(configs):
@@ -14,17 +14,17 @@ def GetPipeLine(configs):
             tf.random.set_random_seed(123)
             sess = tf.Session(graph=tf.get_default_graph())
             K.set_session(sess)
-    if configs["use_algorithm"] == "Classification":
-        pipeline = Classification(**configs)
+    if configs["use_algorithm"] == "Preprocessing":
+        pipeline = Preprocessing(**configs)
         return pipeline
-    elif configs["use_algorithm"] == "Regression":
-        pipeline = Regression(**configs)
-        return pipeline
-    elif configs["use_algorithm"] == "SemanticSegmentation" :
-        pipeline = SemanticSegmentation(**configs)
-        return pipeline
-    elif configs["use_algorithm"] == "InstanceSegmentation":
-        pipeline = InstanceSegmentation(**configs)
-        return pipeline
+    # elif configs["use_algorithm"] == "Regression":
+    #     pipeline = Regression(**configs)
+    #     return pipeline
+    # elif configs["use_algorithm"] == "SemanticSegmentation" :
+    #     pipeline = SemanticSegmentation(**configs)
+    #     return pipeline
+    # elif configs["use_algorithm"] == "InstanceSegmentation":
+    #     pipeline = InstanceSegmentation(**configs)
+    #     return pipeline
     else: 
         raise KeyError("The use_algorithm should be set correctly")
