@@ -3,7 +3,6 @@ import shutil
 import imagej
 import scyjava
 from scyjava import jimport
-import bioformats
 import pandas as pd
 import numpy as np
 import logging
@@ -11,21 +10,22 @@ import logging
 class Preprocessing(object):
 
     def __init__(self,
-                 path_data) -> None:
+                 use_algorithm,
+                 data) -> None:
         
-        self.path_data = path_data
-        self.path_split = path_data + "/layer 0/split channels dapi-gfap/"
-        self.path_normalized = path_data + "/layer 1/normalized/"
-        self.path_mean = path_data + "/layer 1/filter mean/"
-        self.path_gaussian = path_data + "/layer 1/filter gaussian/"
+        self.path_data = data
+        self.path_split = self.path_data + "/layer 0/split channels dapi-gfap/"
+        self.path_normalized = self.path_data + "/layer 1/normalized/"
+        self.path_mean = self.path_data + "/layer 1/filter mean/"
+        self.path_gaussian = self.path_data + "/layer 1/filter gaussian/"
 
-        self.path_composite = path_data + "/layer 1/composite/"
-        self.path_rgb = path_data + "/layer 2/images rgb/"
-        self.path_maximum = path_data + "/layer 2/maximum projections/"
-        self.path_nuclei2d = path_data + "/layer 2/nuclei 2d/"
-        self.path_nuclei3d = path_data + "/layer 2/nuclei 3d/"
+        self.path_composite = self.path_data + "/layer 1/composite/"
+        self.path_rgb = self.path_data + "/layer 2/images rgb/"
+        self.path_maximum = self.path_data + "/layer 2/maximum projections/"
+        self.path_nuclei2d = self.path_data + "/layer 2/nuclei 2d/"
+        self.path_nuclei3d = self.path_data + "/layer 2/nuclei 3d/"
 
-        self.path_results = path_data + "/results/"
+        self.path_results = self.path_data + "/results/"
 
         list_paths = [self.path_split,
                       self.path_normalized,
@@ -44,8 +44,10 @@ class Preprocessing(object):
 
         self.path_macros = "/Users/beatrizfernandes/Documents/GitHub/PIC/macros"
 
-        try: self.ij
-        except NameError: self.ij = imagej.init('sc.fiji:fiji:2.14.0')
+        try: ij
+        except NameError: ij = imagej.init('sc.fiji:fiji:2.14.0')
+
+        self.ij = ij
 
     def dump_info(self, image) -> dict:
         """

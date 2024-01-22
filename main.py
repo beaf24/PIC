@@ -46,10 +46,7 @@ if __name__ == "__main__":
     Sanity checks in order to ensure all settings in config
     have been set so the programm is able to run
     '''
-    assert configs["use_algorithm"] in ['SemanticSegmentation',
-                                        'Regression',
-                                        'InstanceSegmentation',
-                                        'Classification']
+    assert configs["use_algorithm"] in ['Preprocessing']
 
     # if "batchsize" in configs:
     #     if not isinstance(configs["batchsize"], int):
