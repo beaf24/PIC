@@ -1,6 +1,6 @@
-from astroneudl.utils import *
+from utils import *
 # from astroneudl.segmentation.InstanceSegmentation import InstanceSegmentation
-from astroneudl.prepocessing.preprocessing import Preprocessing
+from prepocessing.preprocessing import Preprocessing
 
 
 def GetPipeLine(configs):
