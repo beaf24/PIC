@@ -1,0 +1,5 @@
+{
+    "use_algorithm": "Evaluation2DSeg",
+    "data": "/Users/beatrizfernandes/PIC2/tasks instantdl/nuclei2d_instance_segmentation/cellpose/",
+    "divisions": 128
+}
