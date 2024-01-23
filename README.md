@@ -1,7 +1,7 @@
 # 2nd Cycle Integrated Project
 ## High-throughput _in silico_ characterization of 3D astrocyte-neuron cell cultures.
 
-The present repository encompasses the AtroNeuDL pipeline exerpt developed during the 2nd Cycle Integrated Project. The code was elaborated to meet the needs of image preprocessing, segmentation and evaluation of a dataset containing 21 images of astrocyte cultures obtained from murine-derived gray matter from P5-6 pos-natal mice.
+The present repository encompasses the AstroNeuDL pipeline exerpt developed during the 2nd Cycle Integrated Project. The code was elaborated to meet the needs of image preprocessing, segmentation and evaluation of a dataset containing 21 images of astrocyte cultures obtained from murine-derived gray matter from P5-6 pos-natal mice.
 
 The work here compiled was developed between September 2023 and January 2024.
 
