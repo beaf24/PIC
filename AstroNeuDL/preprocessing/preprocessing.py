@@ -14,6 +14,8 @@ import pandas as pd
 import numpy as np
 import logging
 from alive_progress import alive_bar
+from sklearn.model_selection import KFold
+import shutil
 
 from AstroNeuDL.preprocessing.utils import macro_duplicate_split, macro_filtering, macro_datasets, \
                                             macro_instance_segmentation, macro_make_mask, macro_make_stack, macro_statistics
@@ -421,6 +423,28 @@ class Preprocessing(object):
                     self.ij.py.run_macro("""run("Close All")""")
                     bar()
 
+    def training_testing(self, k_fold, path_masks, path_output , dataset_name):
+        images = sorted(list(filter(lambda element: '.DS_Store' not in element, os.listdir(path_masks))))
+        kf = KFold(n_splits=k_fold, shuffle=True, random_state=0)
+        
+        with alive_bar(k_fold) as bar:
+            for k, (train_index, test_index) in enumerate(kf.split(images)):
+                new_path = path_output + dataset_name + 'k' + str(k_fold) + '_' + str(k+1)
+                if not os.path.exists(new_path): os.makedirs(new_path)
+                train_path = new_path + '/train/'
+                if not os.path.exists(train_path): os.makedirs(train_path)
+                test_path = new_path + '/test/'
+                if not os.path.exists(test_path): os.makedirs(test_path)
+
+                for tr in train_index:
+                    obs_path = images[tr]
+                    shutil.copytree(path_masks + obs_path, train_path + obs_path)
+                
+                for ts in test_index:
+                    obs_path = images[ts]
+                    shutil.copytree(path_masks + obs_path, test_path + obs_path)
+                bar()
+
     def run(self):
         """
         Runs the preprocessing pipeline
@@ -483,6 +507,13 @@ class Preprocessing(object):
                 self.iseg_2d_structure(path_input=self.dataset_2d_segmentation["input"],
                                        path_output=self.dataset_2d_segmentation["output"],
                                        path_roi2d=self.dataset_2d_segmentation["rois"])
+                
+                if self.dataset_2d_segmentation["k_fold"] is not False: 
+                    self.path_maskrcnn_datasets = self.dataset_2d_segmentation["output"] + "/Mask RCNN datasets/"
+                    self.training_testing(self.dataset_2d_segmentation["k_fold"], 
+                                          dataset_name=self.dataset_2d_segmentation["name"], 
+                                          path_masks=self.dataset_2d_segmentation["output"], 
+                                          path_output=self.path_maskrcnn_datasets)
         
         if self.dataset_3d_segmentation is not None:
             logging.info("Starting to prepare the dataset for the 3D instance segmentation analysis.")
@@ -492,9 +523,16 @@ class Preprocessing(object):
                 logging.info("Data fetched from: {}".format(self.dataset_3d_segmentation["input"]))
                 logging.info("ROIs fetched from: {}".format(self.dataset_3d_segmentation["rois"]))
                 self.iseg_3d_structure(path_input=self.dataset_3d_segmentation["input"],
-                                   path_output=self.dataset_3d_segmentation["output"],
-                                   path_roi3d=self.dataset_3d_segmentation["rois"])
-        
+                                       path_output=self.dataset_3d_segmentation["output"],
+                                       path_roi3d=self.dataset_3d_segmentation["rois"])
+                
+                if self.dataset_3d_segmentation["k_fold"] is not False: 
+                    self.path_stardist3d_datasets = self.dataset_3d_segmentation["output"] + "/Stardist 3D datasets/"
+                    self.training_testing(self.dataset_3d_segmentation["k_fold"], 
+                                          dataset_name=self.dataset_3d_segmentation["name"], 
+                                          path_masks=self.dataset_3d_segmentation["output"], 
+                                          path_output=self.path_stardist3d_datasets)
+
         if self.statistics is not False:
             if not os.listdir(self.statistics): logging.info("NO DATA FOUND: {}".format(self.statistics))
             else:

@@ -2,20 +2,17 @@
     "use_algorithm": "Preprocessing",
     "data": "/Users/beatrizfernandes/PIC2/data/preprop_test",
     "preprocessing_steps": {
-        "duplicate": true,
-        "normalize": true,
-        "filter": true,
-        "prepare_analysis": true
+        "duplicate": false,
+        "normalize": false,
+        "filter": false,
+        "prepare_analysis": false
     },
     "dataset_2d_segmentation": {
         "input": "/Users/beatrizfernandes/PIC2/data/preprop_test/layer 2/nuclei 2d/",
         "output": "/Users/beatrizfernandes/PIC2/data/preprop_test/layer 3/2d instance masks/",
-        "rois": "/Users/beatrizfernandes/PIC2/data/preprop_test/rois_nuclei2d/"
-    },
-    "dataset_3d_segmentation": {
-        "input": "/Users/beatrizfernandes/PIC2/data/preprop_test/layer 2/nuclei 3d/",
-        "output": "/Users/beatrizfernandes/PIC2/data/preprop_test/layer 3/3d instance masks/",
-        "rois": "/Users/beatrizfernandes/PIC2/data/preprop_test/rois_nuclei3d/"
+        "rois": "/Users/beatrizfernandes/PIC2/data/preprop_test/rois_nuclei2d/",
+        "k_fold": 7,
+        "name": "name"
     },
     "statistics": false
 }

@@ -15,9 +15,9 @@ The preprocessing consists of:
   3. Apply filtering (mean and gaussian)
   4. Generate datasets for learning tasks
 
-<center>
-  <img width="524" alt="image" src="https://github.com/beaf24/PIC/assets/85555689/1c2e8be8-f885-4e49-9f4c-fe84a345db53">
-<\center>
+<p align="center">
+  <img width="524" alt="image" src="datasets.png">
+<\p>
 
 ### Configurations:
 
@@ -80,7 +80,7 @@ data
 
 ## 2D Segmentation
 
-The segmentation algorithm is intended to train the 2D instance segmentation of images with Mask R-CNN algorithm. The code was almost completly reused from the InstantDL pipeline.
+The segmentation algorithm is intended to train the 2D instance segmentation of images with Mask R-CNN algorithm. The code was almost completely reused from the InstantDL pipeline.
 
 ### Configurations
 
@@ -88,7 +88,7 @@ The segmentation algorithm is intended to train the 2D instance segmentation of 
 - `path`: the path to your project directory here
 - `use_pretrained_weights`:  Set to `True` if you want to use pretrained weights
 - `pretrained_weights`: Set a relative file path from your project directory with the filename here
-- `batchsize`:   Set the batchsize depeding on your GPU capabilities
+- `batchsize`:   Set the batchsize depending on your GPU capabilities
 - `iterations_over_dataset`:  Set how many iterations over the dataset should be taken for learning. It might stop automatically if no improvement on the validation set was measured after 25 epochs
 - `data_gen_args` : a dictionary including these parameters:
    -  `save_augmented_images`:  false, # true or false
@@ -152,7 +152,7 @@ path
 
 ## Evaluation
 
-Evaluates the performance of the models for further comparison.
+To evaluate the performance of the models. This individual evaluation is used later for comparing the performance of different models.
 
 ### Configurations
 
