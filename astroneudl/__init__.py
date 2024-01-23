@@ -1,7 +1,14 @@
+"""
+AstroNeuDL
+__init__
+Written by Beatriz Fernandes
+22nd January
+"""
+
 from AstroNeuDL.utils import *
-# from astroneudl.segmentation.InstanceSegmentation import InstanceSegmentation
+from AstroNeuDL.segmentation.InstanceSegmentation import InstanceSegmentation
 from AstroNeuDL.preprocessing.preprocessing import Preprocessing
-from AstroNeuDL.evaluation.evaluation import Evaluation_2D_Seg
+from AstroNeuDL.evaluation.evaluation import Evaluation2DSeg
 
 def GetPipeLine(configs):
     if "seeds" in configs:
@@ -17,8 +24,11 @@ def GetPipeLine(configs):
     if configs["use_algorithm"] == "Preprocessing":
         pipeline = Preprocessing(**configs)
         return pipeline
-    if configs["use_algorithm"] == "Evaluation_2D_Seg":
-        pipeline = Evaluation_2D_Seg(**configs)
+    elif configs["use_algorithm"] == "Evaluation2DSeg":
+        pipeline = Evaluation2DSeg(**configs)
+        return pipeline
+    elif configs["use_algorithm"] == "InstanceSegmentation":
+        pipeline = InstanceSegmentation(**configs)
         return pipeline
     # elif configs["use_algorithm"] == "Regression":
     #     pipeline = Regression(**configs)
@@ -26,8 +36,6 @@ def GetPipeLine(configs):
     # elif configs["use_algorithm"] == "SemanticSegmentation" :
     #     pipeline = SemanticSegmentation(**configs)
     #     return pipeline
-    # elif configs["use_algorithm"] == "InstanceSegmentation":
-    #     pipeline = InstanceSegmentation(**configs)
-    #     return pipeline
+    
     else: 
         raise KeyError("The use_algorithm should be set correctly")

@@ -1,6 +1,6 @@
 #@ String image_name 
 #@ String path_input
-#@ String path_results
+#@ String path_statistics
 
 open(path_input + image_name + ".tif");
 selectImage(image_name + ".tif");

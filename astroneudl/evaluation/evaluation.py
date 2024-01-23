@@ -1,3 +1,10 @@
+"""
+AstroNeuDL
+Data Evalautaion
+Written by Beatriz Fernandes
+22nd January
+"""
+
 import os
 import argparse
 import logging
@@ -13,7 +20,7 @@ def load_json(file_path):
     with open(file_path, 'r') as stream:
         return json.load(stream)
 
-class Evaluation_2D_Seg(object):
+class Evaluation2DSeg(object):
 
     def __init__(self,
                  use_algorithm,
