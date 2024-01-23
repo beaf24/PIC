@@ -23,8 +23,20 @@ The preprocessing consists of:
 
 * ```use_algorithm```: "Preprocessing"
 * ```data```: the path for the parent directory of the dataset
-* ```preprocessing_steps```:
-  * ```duplicating```: true #false
+* ```preprocessing_steps```: a dictionary containing these parameters
+  * ```duplicating```: true or false
+  * ```normalize```: true or false
+  * ```filter```: true or false
+  * ```prepare_analysis```: true or false
+* ```dataset_2d_segmentation```: a dictionary containing these parameters
+  * ```input```: folder of the dataset to be converted for **2D Segmentation** input format
+  * ```rois```: folder of the rois obtained in Fiji correspondent to the data in the input
+  * ```output```: folder to output the formated dataset
+* ```dataset_3d_segmentation```: a dictionary containing these parameters
+  * ```input```: folder of the dataset to be converted for **3D Segmentation** input format
+  * ```rois```: folder of the rois obtained in Fiji correspondent to the data in the input
+  * ```output```: folder to output the formated dataset
+* ```statistics```: false or path for the data to extract statistics
 
 ## 2D Segmentation
 
