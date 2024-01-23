@@ -6,7 +6,7 @@
 	"iterations_over_dataset": 20,
 	"image_size": [1024, 1024, 1],
 	"data_gen_args": {
-		"save_augmented_images": true,
+		"save_augmented_images": false,
 		"resample_images": false, 
 		"std_normalization": true, 
 		"feature_scaling": true,
