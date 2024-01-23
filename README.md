@@ -1,5 +1,5 @@
 # 2nd Cycle Integrated Project
-## High-throughput in silico characterization of 3D astrocyte-neuron cell cultures.
+## High-throughput _in silico_ characterization of 3D astrocyte-neuron cell cultures.
 
 The present repository encompasses the pipeline exerpt developed during the 2nd Cycle Integrated Project. The code was elaborated to meet the needs of image preprocessing, segmentation and evaluation of a dataset containing 21 images of astrocyte cultures obtained from murine-derived gray matter from P5-6 pos-natal mice.
 
@@ -18,6 +18,13 @@ The preprocessing consists of:
 <center>
   <img width="524" alt="image" src="https://github.com/beaf24/PIC/assets/85555689/1c2e8be8-f885-4e49-9f4c-fe84a345db53">
 </center>
+
+### Configurations:
+
+* ```use_algorithm```: "Preprocessing"
+* ```data```: the path for the parent directory of the dataset
+* ```preprocessing_steps```:
+  * ```duplicating```: true #false
 
 ## 2D Segmentation
 
