@@ -150,3 +150,13 @@ path
                └── image_L_nuclei2d_indK.png
 ```
 
+## Evaluation
+
+Evaluates the performance of the models for further comparison.
+
+### Configurations
+
+- `use_algorithm`: "Evaluation2DSeg" 
+- `data`: the path for the parent directory of the dataset
+- `divisions`:  128, # ideally an integer division of the image size (1024$\times$1024)
+
