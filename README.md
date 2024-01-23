@@ -17,26 +17,61 @@ The preprocessing consists of:
 
 <center>
   <img width="524" alt="image" src="https://github.com/beaf24/PIC/assets/85555689/1c2e8be8-f885-4e49-9f4c-fe84a345db53">
-<center>
+<\center>
 
 ### Configurations:
 
-* ```use_algorithm```: "Preprocessing"
-* ```data```: the path for the parent directory of the dataset
-* ```preprocessing_steps```: a dictionary containing these parameters
-  * ```duplicating```: true or false
-  * ```normalize```: true or false
-  * ```filter```: true or false
-  * ```prepare_analysis```: true or false
-* ```dataset_2d_segmentation```: a dictionary containing these parameters
-  * ```input```: folder of the dataset to be converted for **2D Segmentation** input format
-  * ```rois```: folder of the rois obtained in Fiji correspondent to the data in the input
-  * ```output```: folder to output the formated dataset
-* ```dataset_3d_segmentation```: a dictionary containing these parameters
-  * ```input```: folder of the dataset to be converted for **3D Segmentation** input format
-  * ```rois```: folder of the rois obtained in Fiji correspondent to the data in the input
-  * ```output```: folder to output the formated dataset
-* ```statistics```: false or path for the data to extract statistics
+* `use_algorithm`: "Preprocessing"
+* `data`: the path for the parent directory of the dataset
+* `preprocessing_steps`: a dictionary containing these parameters
+  * `duplicating`: true or false
+  * `normalize`: true or false
+  * `filter`: true or false
+  * `prepare_analysis`: true or false
+* `dataset_2d_segmentation`: a dictionary containing these parameters
+  * `input`: folder of the dataset to be converted for **2D Segmentation** input format
+  * `rois`: folder of the rois obtained in Fiji correspondent to the data in the input
+  * `output`: folder to output the formated dataset
+* `dataset_3d_segmentation`: a dictionary containing these parameters
+  * `input`: folder of the dataset to be converted for **3D Segmentation** input format
+  * `rois`: folder of the rois obtained in Fiji correspondent to the data in the input
+  * `output`: folder to output the formated dataset
+* `statistics`: false or path for the data to extract statistics
+
+### Structure
+
+```bash
+data path
+├── originals                    
+│   ├── image_001
+│   ├── image_002
+│   │
+│   │
+│   └── image_N  
+│
+├── rois_nuclei2d                    
+│   ├── image_001_nuclei2d_RoiSet
+│   ├── image_002_nuclei2d_RoiSet
+│   │
+│   │
+│   └── image_N_nuclei2d_RoiSet
+│        ├── 0001_0001.roi
+│        ├── .
+│        ├── .
+│        └── 9999_9999.roi 
+│
+└── rois_nuclei3d                    
+    ├── image_001_nuclei3d_RoiSet
+    ├── image_002_nuclei3d_RoiSet
+    │
+    │
+    └── image_N_nuclei3d_RoiSet
+         ├── 0001_0001.roi
+         ├── .
+         ├── .
+         └── 9999_9999.roi
+```
+
 
 ## 2D Segmentation
 
