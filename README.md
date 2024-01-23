@@ -19,4 +19,8 @@ The preprocessing consists of:
   <img width="524" alt="image" src="https://github.com/beaf24/PIC/assets/85555689/1c2e8be8-f885-4e49-9f4c-fe84a345db53">
 </center>
 
+## 2D Segmentation
+
+The segmentation algorithm is intended to train the 2D instance segmentation of images with Mask R-CNN algorithm. The code was almost completly reused from the InstantDL pipeline.
+
 
