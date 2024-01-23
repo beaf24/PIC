@@ -158,5 +158,5 @@ Evaluates the performance of the models for further comparison.
 
 - `use_algorithm`: "Evaluation2DSeg" 
 - `data`: the path for the parent directory of the dataset
-- `divisions`:  128, # ideally an integer division of the image size (1024 $\times$ 1024)
+- `divisions`:  128, # ideally an integer division of the image size ($1024 \times 1024$)
 
