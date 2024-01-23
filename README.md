@@ -63,8 +63,8 @@ data path
 └── rois_nuclei3d                    
     ├── image_001_nuclei3d_RoiSet
     ├── image_002_nuclei3d_RoiSet
-    │
-    │
+    │   ...
+    │   ...
     └── image_N_nuclei3d_RoiSet
          ├── 0001_0001.roi
          │   ...
