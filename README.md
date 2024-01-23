@@ -41,13 +41,13 @@ The preprocessing consists of:
 ### Structure
 
 ```bash
-data path
+data
 ├── originals                    
-│    ├── image_001
-│    ├── image_002
+│    ├── image_001.tif
+│    ├── image_002.tif
 │    │   ...
 │    │   ...
-│    └── image_N  
+│    └── image_N.tif
 │
 ├── rois_nuclei2d                    
 │    ├── image_001_nuclei2d_RoiSet
@@ -82,4 +82,71 @@ data path
 
 The segmentation algorithm is intended to train the 2D instance segmentation of images with Mask R-CNN algorithm. The code was almost completly reused from the InstantDL pipeline.
 
+### Configurations
+
+- `use_algorithm`: "Instance Segmentation" 
+- `path`: the path to your project directory here
+- `use_pretrained_weights`:  Set to `True` if you want to use pretrained weights
+- `pretrained_weights`: Set a relative file path from your project directory with the filename here
+- `batchsize`:   Set the batchsize depeding on your GPU capabilities
+- `iterations_over_dataset`:  Set how many iterations over the dataset should be taken for learning. It might stop automatically if no improvement on the validation set was measured after 25 epochs
+- `data_gen_args` : a dictionary including these parameters:
+   -  `save_augmented_images`:  false, # true or false
+   -  `resample_images`:  false, # true or false
+   -  `std_normalization`:  false, # true or false
+   -  `feature_scaling`:  false, # true or false
+   -  `horizontal_flip`:  false, # true or false
+   -  `vertical_flip`:  false, # true or false
+   -  `poission_noise`:  false, # false or float 
+   -  `rotation_range`:  false, # false or float (degrees)
+   -  `zoom_range`:  false, # false or float (magnification)
+   -  `contrast_range`:  false, # false or float 
+   -  `brightness_range`:  false, # false or float 
+   -  `gamma_shift`:  false, # false or float (gamma shift parameter)
+   -  `threshold_background_image`:  false, # true or false
+   -  `threshold_background_groundtruth`:  false, # true or false
+   -  `gaussian_blur_image`:  false, # true or float
+   -  `gaussian_blur_label`:  false, # true or  # true or false
+   -  `binarize_mask`:  false # true or false
+- `loss_function`:   MSE, MAE, dice loss, binary cross entropy, categorical cross entropy ,
+- `num_classes`: Number of classes (should be 1 for binary segmenation tasks)
+- `image_size`: false or tuple with dimensions of desired image size in format [x-dim, y-dim, (z-dim), channels],
+e.g.: [128,128,3]
+- `calculate_uncertainty`:  false # true or false
+- `evaluation`  false # true or false
+
+### Structure
+
+```bash
+path
+├── train                    
+│    ├── image_001_nuclei2d
+│    ├── image_002_nuclei2d
+│    ├── ...
+│    ├── ...
+│    └── image_N_nuclei2d  
+│         ├── image
+│         │    └── image_N_nuclei2d.png
+│         │
+│         └── mask
+│              ├── image_N_nuclei2d_ind0.png
+│              ├── ...
+│              ├── ...
+│              └── image_N_nuclei2d_indK.png
+│
+└── test                    
+     ├── image_00X_nuclei2d
+     ├── image_00Y_nuclei2d
+     ├── ...
+     ├── ...
+     └── image_L_nuclei2d  
+          ├── image
+          │    └── image_L_nuclei2d.png
+          │
+          └── mask
+               ├── image_L_nuclei2d_ind0.png
+               ├── ...
+               ├── ...
+               └── image_L_nuclei2d_indK.png
+```
 
