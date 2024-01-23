@@ -45,19 +45,19 @@ data path
 ├── originals                    
 │   ├── image_001
 │   ├── image_002
-│   │
-│   │
+│   │   ...
+│   │   ...
 │   └── image_N  
 │
 ├── rois_nuclei2d                    
 │   ├── image_001_nuclei2d_RoiSet
 │   ├── image_002_nuclei2d_RoiSet
-│   │
-│   │
+│   │   ...
+│   │   ...
 │   └── image_N_nuclei2d_RoiSet
 │        ├── 0001_0001.roi
-│        ├── .
-│        ├── .
+│        │   ...
+│        │   ...
 │        └── 9999_9999.roi 
 │
 └── rois_nuclei3d                    
@@ -67,8 +67,8 @@ data path
     │
     └── image_N_nuclei3d_RoiSet
          ├── 0001_0001.roi
-         ├── .
-         ├── .
+         │   ...
+         │   ...
          └── 9999_9999.roi
 ```
 
