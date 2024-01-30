@@ -159,4 +159,3 @@ To evaluate the performance of the models. This individual evaluation is used la
 - `use_algorithm`: "Evaluation2DSeg" 
 - `data`: the path for the parent directory of the dataset
 - `divisions`:  128, # ideally an integer division of the image size (1024×1024)
-
